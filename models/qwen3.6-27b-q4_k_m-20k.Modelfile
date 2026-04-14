@@ -1,0 +1,6 @@
+# base: qwen3.6:27b-q4_K_M (dense)
+# ctx 20k matches qwen3.5-27b baseline — expect ~12-24% CPU spillover on dual RTX 3060
+# weights 17 GB + runtime ~4 GB (dual-GPU) + KV 20k q8_0 ~2 GB ≈ 23 GB (borderline vs 23.4 GB budget)
+FROM qwen3.6:27b-q4_K_M
+
+PARAMETER num_ctx 20480

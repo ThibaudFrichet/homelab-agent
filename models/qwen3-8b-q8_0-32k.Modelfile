@@ -1,0 +1,11 @@
+# base: qwen3:8b-q8_0
+# tuning: temperature baissée pour tool use déterministe, repeat_penalty anti-boucle
+FROM qwen3:8b-q8_0
+
+PARAMETER num_ctx 32768
+PARAMETER temperature 0.3
+PARAMETER top_k 20
+PARAMETER top_p 0.95
+PARAMETER repeat_penalty 1.05
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|im_end|>"
