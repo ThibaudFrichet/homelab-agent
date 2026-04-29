@@ -12,10 +12,13 @@ It consolidates the Ollama service configuration, a catalog of custom Modelfiles
 - **Coding CLI** — [opencode](https://opencode.ai/)
   - Plugin: [oc-tps](https://github.com/Tarquinen/oc-tps) (tokens/s counter)
   - Tools disabled in `~/.config/opencode/opencode.json` to reduce system-prompt footprint: `skill`, `todowrite`, `question`, `invalid`
+  - Example configuration file: [opencode.example.json](opencode.example.json)
+  - Permissions: All commands and modifications require authorization, except for reads (read, glob, ls, etc.). Security first.
 
 ## 📁 Contents
 - [TESTS.md](TESTS.md) — benchmark scenarios and per-model observations
-- `models/*.Modelfile` — build files for custom models (FROM + PARAMETER only, no template or license)
+- [opencode.example.json](opencode.example.json) — example opencode configuration file with security permissions
+- `models/*.Modelfile` — build files for custom models (naming scheme, context sizes, quantizations)
 - `utils/sync_opencode_ollama.sh` — synchronizes Ollama models into the opencode configuration (run after any model addition or removal)
 
 ## 🧪 Tests Summary
@@ -24,9 +27,9 @@ Benchmarks cover code comprehension and code authoring scenarios. Full matrix an
 
 | Role | Model |
 |---|---|
-| Daily driver | `qwen3.5-9b-q8_0-64k` |
+| Daily driver | `qwen3-coder-30b-a3b-q4_k_m-32k` |
 | Heavy tasks (fallback) | `qwen3.6-27b-q4_k_m-20k` |
-| Occasional / reference | `gpt-oss-20b`, `gemma4-26b` |
+| Occasional / reference | `qwen3.5-9b-q8_0-64k`, `gpt-oss-20b`, `gemma4-26b` |
 
 ## 💻 Hardware
 | Component | Details |

@@ -4,20 +4,20 @@
 
 | Role | Model |
 |---|---|
-| Daily driver | `qwen3.5-9b-q8_0-64k` |
+| Daily driver | `qwen3-coder-30b-a3b-q4_k_m-32k` |
 | Heavy tasks (fallback) | `qwen3.6-27b-q4_k_m-20k` |
-| Occasional / reference | `gpt-oss-20b`, `gemma4-26b` |
+| Occasional / reference | `qwen3.5-9b-q8_0-64k`, `gpt-oss-20b`, `gemma4-26b` |
 | Superseded / also tested | `qwen3.5-27b`, `qwen3.6-35b-a3b` |
 
 ## Models
 
-### Daily driver — `qwen3.5-9b-q8_0-64k`
+### Daily driver — `qwen3-coder-30b-a3b-q4_k_m-32k`
 
-- **VRAM fit** : 🟢 16G GPU
+- **VRAM fit** : 🟢 20 GB GPU, 100% GPU
 - **Speed (code reading)** : 🟢 30 tk/s
-- **Code — reading** : 🟢 **OK**
-- **Code — writing** : 🟢 **OK**
-- **Code — CURL HA** : 🟢 **OK**
+- **Code — reading** : 🟢 **OK** (very good results)
+- **Code — writing** : 🟢 **OK** (good results)
+- **Code — CURL HA** : 🟢 **OK** (good results)
 
 ### Heavy tasks (fallback) — `qwen3.6-27b-q4_k_m-20k`
 
@@ -28,6 +28,14 @@
 - **Code — CURL HA** : 🟢 **OK** (good results)
 
 ### Occasional / reference
+
+#### `qwen3.5-9b-q8_0-64k`
+
+- **VRAM fit** : 🟢 16G GPU
+- **Speed (code reading)** : 🟢 30 tk/s
+- **Code — reading** : 🟢 **OK**
+- **Code — writing** : 🟢 **OK**
+- **Code — CURL HA** : 🟢 **OK**
 
 #### `gpt-oss-20b-mxfp4-48k`
 
