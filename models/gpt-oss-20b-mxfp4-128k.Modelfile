@@ -1,0 +1,5 @@
+# base: gpt-oss:20b (MXFP4 native quantization, MoE)
+# ctx 128k = native max — measured 14.4 GB, 100% GPU on dual RTX 3060 (load only, Ollama 0.34.4)
+FROM gpt-oss:20b
+
+PARAMETER num_ctx 131072

@@ -1,0 +1,6 @@
+# base: qwen3.8:27b-q4_K_M (dense, hybrid attention) — heavy-task model, successor of qwen3.6-27b
+# ctx 48k — measured 19.5 GB, 6%/94% CPU/GPU on dual RTX 3060 (load only, Ollama 0.34.4)
+# the 6% spill comes from the weight split across GPUs, not the context: same 6% from 12k to 48k, 10% at 64k
+FROM qwen3.8:27b-q4_K_M
+
+PARAMETER num_ctx 49152

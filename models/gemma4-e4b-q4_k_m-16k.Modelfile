@@ -1,7 +1,0 @@
-# base: gemma4:e4b (Q4_K_M)
-FROM gemma4:e4b-it-q4_K_M
-
-PARAMETER num_ctx 16384
-PARAMETER temperature 1
-PARAMETER top_k 64
-PARAMETER top_p 0.95

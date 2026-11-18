@@ -1,0 +1,6 @@
+# base: gemma4:12b-it-q8_0 (dense, sliding-window attention)
+# ctx 128k — measured 14.8 GB, 100% GPU on dual RTX 3060 (load only, Ollama 0.34.4)
+# native max 256k also fits (16.4 GB) but long-context recall and prefill time degrade; 128k is the practical cap
+FROM gemma4:12b-it-q8_0
+
+PARAMETER num_ctx 131072

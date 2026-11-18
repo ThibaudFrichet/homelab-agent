@@ -1,5 +1,0 @@
-# base: qwen3.5:9b-q8_0 (dense)
-# ctx 64k fits comfortably on a single GPU
-FROM qwen3.5:9b-q8_0
-
-PARAMETER num_ctx 65536

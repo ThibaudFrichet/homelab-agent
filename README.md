@@ -9,27 +9,28 @@ It consolidates the Ollama service configuration, a catalog of custom Modelfiles
 
 ## 🧩 Stack
 - **LLM server** — [Ollama](https://ollama.com/)
-- **Coding CLI** — [opencode](https://opencode.ai/)
-  - Plugin: [oc-tps](https://github.com/Tarquinen/oc-tps) (tokens/s counter)
-  - Tools disabled in `~/.config/opencode/opencode.json` to reduce system-prompt footprint: `skill`, `todowrite`, `question`, `invalid`
-  - Example configuration file: [opencode.example.json](opencode.example.json)
-  - Permissions: All commands and modifications require authorization, except for reads (read, glob, ls, etc.). Security first.
+- **Coding CLI** — [opencode](https://opencode.ai/) v2
 
 ## 📁 Contents
 - [TESTS.md](TESTS.md) — benchmark scenarios and per-model observations
-- [opencode.example.json](opencode.example.json) — example opencode configuration file with security permissions
+- [MODELS.md](MODELS.md) — custom model naming convention and commands
 - `models/*.Modelfile` — build files for custom models (naming scheme, context sizes, quantizations)
-- `utils/sync_opencode_ollama.sh` — synchronizes Ollama models into the opencode configuration (run after any model addition or removal)
+- [opencode/](opencode/) — opencode global configuration, symlinked into `~/.config/opencode/`
 
 ## 🧪 Tests Summary
 
 Benchmarks cover code comprehension and code authoring scenarios. Full matrix and per-model observations are available in [TESTS.md](TESTS.md).
 
+Current campaign (opencode v2):
+
 | Role | Model |
 |---|---|
-| Daily driver | `qwen3-coder-30b-a3b-q4_k_m-32k` |
-| Heavy tasks (fallback) | `qwen3.6-27b-q4_k_m-20k` |
-| Occasional / reference | `qwen3.5-9b-q8_0-64k`, `gpt-oss-20b`, `gemma4-26b` |
+| Daily driver, fast | `gpt-oss-20b-mxfp4-128k` |
+| Heavy and agentic tasks, quality | `qwen3.8-27b-q4_k_m-48k` |
+| Code reading / writing (to confirm) | `qwen3-coder-30b-a3b-q4_k_m-32k` |
+| No clear role | `gemma4-12b-q8_0-128k` |
+
+Previous campaign (opencode v1): daily driver `qwen3-coder-30b-a3b`, heavy fallback `qwen3.6-27b`, occasional `qwen3.5-9b`, `gpt-oss-20b`, `gemma4-26b`.
 
 ## 💻 Hardware
 | Component | Details |
@@ -78,8 +79,27 @@ Format: `{base}-{variant}-{quant}-{ctx}`
 ### Build
 
 ```bash
-ollama create qwen3.5-9b-q8_0-64k -f models/qwen3.5-9b-q8_0-64k.Modelfile
+ollama create gpt-oss-20b-mxfp4-128k -f models/gpt-oss-20b-mxfp4-128k.Modelfile
 ```
+
+### Context window
+
+Keep `num_ctx` (Modelfile) and `limit.context` ([opencode.jsonc](opencode/opencode.jsonc)) equal: Ollama's `/v1` API ignores `num_ctx` per request, and opencode ignores `num_ctx` (it reads the native max).
+
+## 🤖 opencode Configuration
+
+[opencode/opencode.jsonc](opencode/opencode.jsonc): local Ollama models only, per-model context limits, restrictive permissions.
+
+```bash
+ln -sf "$PWD/opencode/opencode.jsonc" ~/.config/opencode/opencode.jsonc
+```
+
+| Action | Effect |
+|---|---|
+| Everything else | ask |
+| `read` (except `.env`), `glob`, `grep` | allow |
+| `shell` read-only (`ls`, `grep`, `cat`, `head`, `tail`, `wc`, `find`, `git status/diff/log`) | allow |
+| `skill`, `question`, `experimental_image_generate`, `browser` | deny |
 
 ## 📚 Technical Concepts
 

@@ -1,6 +1,0 @@
-# base: qwen3.6:35b-a3b-q4_K_M (MoE, 3B active per token)
-# ctx 32k — weights ~24 GB exceed 23.4 GB VRAM budget, expect CPU spillover
-# MoE limits decode impact: few active weights per token mitigate spillover cost
-FROM qwen3.6:35b-a3b-q4_K_M
-
-PARAMETER num_ctx 32768

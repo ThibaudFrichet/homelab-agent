@@ -30,6 +30,10 @@ To update an existing model, increment `Vxx`: `V02.2026-05-01`.
 Each model has its own `{model-name}.Modelfile` in the `models/` directory.  
 The Modelfile contains only overrides (FROM + PARAMETER) — no template or license.
 
+## opencode
+
+After adding a model or changing its `num_ctx`, set the same `limit.context` in [opencode/opencode.jsonc](opencode/opencode.jsonc).
+
 ## Useful Commands
 
 ```bash

@@ -1,5 +1,0 @@
-# base: gemma4:26b-a4b-it-q4_K_M (MoE, 4B active params)
-# ctx 20k — same proportion as qwen3.5 27b dense for comparison
-FROM gemma4:26b-a4b-it-q4_K_M
-
-PARAMETER num_ctx 20480

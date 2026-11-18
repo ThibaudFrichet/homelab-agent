@@ -1,5 +1,0 @@
-# base: qwen3.5:27b-q4_K_M (dense)
-# ctx 20k chosen for clean dual-GPU fit (no CPU spillover)
-FROM qwen3.5:27b-q4_K_M
-
-PARAMETER num_ctx 20480

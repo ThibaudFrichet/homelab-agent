@@ -1,0 +1,74 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Local only: hide every catalog provider (opencode, ollama-cloud, …) except the local Ollama
+  "policies": [
+    { "action": "provider.use", "resource": "*", "effect": "deny" },
+    { "action": "provider.use", "resource": "ollama", "effect": "allow" }
+  ],
+
+  // Keep `context` equal to the Modelfile num_ctx (opencode reads the native max otherwise)
+  "providers": {
+    "ollama": {
+      "models": {
+        "qwen3-coder-30b-a3b-q4_k_m-32k:latest": { "limit": { "context": 32768, "output": 8192 } },
+        "qwen3.8-27b-q4_k_m-48k:latest":         { "limit": { "context": 49152, "output": 8192 } },        "gemma4-12b-q8_0-128k:latest":           { "limit": { "context": 131072, "output": 8192 } },
+        "gpt-oss-20b-mxfp4-128k:latest":         { "limit": { "context": 131072, "output": 8192 } }
+      }
+    }
+  },
+
+  // Restrictive policy. V2's built-in default is allow-all; the last matching rule wins.
+  "permissions": [
+    // Baseline: anything not listed below asks first
+    { "action": "*", "resource": "*", "effect": "ask" },
+
+    // Reads: allowed, except .env files
+    { "action": "read", "resource": "*", "effect": "allow" },
+    { "action": "read", "resource": "*.env", "effect": "ask" },
+    { "action": "read", "resource": "*.env.*", "effect": "ask" },
+    { "action": "read", "resource": "*.env.example", "effect": "allow" },
+    { "action": "glob", "resource": "*", "effect": "allow" },
+    { "action": "grep", "resource": "*", "effect": "allow" },
+
+    // Anything outside the project asks (V2 allows it by default)
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+
+    // Edits ask
+    { "action": "edit", "resource": "*", "effect": "ask" },
+
+    // Shell: ask, except read-only commands
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "ls *", "effect": "allow" },
+    { "action": "shell", "resource": "grep *", "effect": "allow" },
+    { "action": "shell", "resource": "cat *", "effect": "allow" },
+    { "action": "shell", "resource": "head *", "effect": "allow" },
+    { "action": "shell", "resource": "tail *", "effect": "allow" },
+    { "action": "shell", "resource": "wc *", "effect": "allow" },
+    { "action": "shell", "resource": "find *", "effect": "allow" },
+    { "action": "shell", "resource": "git status *", "effect": "allow" },
+    { "action": "shell", "resource": "git diff *", "effect": "allow" },
+    { "action": "shell", "resource": "git log *", "effect": "allow" },
+    // ...but their write/exec flags ask again
+    { "action": "shell", "resource": "find *-exec*", "effect": "ask" },
+    { "action": "shell", "resource": "find *-ok*", "effect": "ask" },
+    { "action": "shell", "resource": "find *-delete*", "effect": "ask" },
+    { "action": "shell", "resource": "find *-fprint*", "effect": "ask" },
+    { "action": "shell", "resource": "find *-fls*", "effect": "ask" },
+    { "action": "shell", "resource": "git *--output*", "effect": "ask" },
+
+    // Network and Code Mode (its JS runtime has fetch()): ask
+    { "action": "webfetch", "resource": "*", "effect": "ask" },
+    { "action": "websearch", "resource": "*", "effect": "ask" },
+    { "action": "execute", "resource": "*", "effect": "ask" },
+
+    // Subagents ask
+    { "action": "subagent", "resource": "*", "effect": "ask" },
+
+    // Unused tools: off (were disabled in V1)
+    { "action": "skill", "resource": "*", "effect": "deny" },
+    { "action": "question", "resource": "*", "effect": "deny" },
+    { "action": "experimental_image_generate", "resource": "*", "effect": "deny" },
+    { "action": "browser", "resource": "*", "effect": "deny" }
+  ]
+}

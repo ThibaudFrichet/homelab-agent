@@ -1,6 +1,6 @@
 # base: qwen3-coder:30b-a3b-q4_K_M (MoE, 3B active per token, code-specialized)
-# measured: 20 GB total at 32k, 100% GPU on dual RTX 3060
-# native context 256k upstream — capped at 32k to fit VRAM
+# measured: 20.6 GB at 32k, 100% GPU on dual RTX 3060 (Ollama 0.34.4)
+# native context 256k upstream — capped at 32k: 48k already spills 2% to CPU
 FROM qwen3-coder:30b-a3b-q4_K_M
 
 PARAMETER num_ctx 32768

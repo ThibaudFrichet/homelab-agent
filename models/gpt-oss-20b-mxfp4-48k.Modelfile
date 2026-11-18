@@ -1,5 +1,0 @@
-# base: gpt-oss:20b (MXFP4 native quantization)
-# ctx 48k — fits comfortably on 2 GPUs (~14 GB weights + KV)
-FROM gpt-oss:20b
-
-PARAMETER num_ctx 49152
